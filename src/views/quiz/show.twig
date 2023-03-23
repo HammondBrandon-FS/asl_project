@@ -1,0 +1,17 @@
+{% extends 'layouts/_default.twig' %}
+
+{% block main_content %}
+    <div>
+        <h1>{{ quiz.name }}</h1>
+        <p><strong>Weight: </strong>{{ quiz.weight }}</p>
+        <p><strong>ID: </strong>{{ quiz.id }}</p>
+        <p><strong>Created At: </strong>{{ quiz.createdAt }}</p>
+        <p><strong>Updated Last: </strong>{{ quiz.updatedAt }}</p>
+        <p>
+            <a href="/quizzes/{{ quiz.id }}/delete">Delete</a>
+        </p>
+        <p>
+            <a href="/quizzes/">Back</a>
+        </p>
+    </div>
+{% endblock %}

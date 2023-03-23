@@ -19,7 +19,7 @@ router.get('/callback', async (req, res) => {
     }, async (error, response, body) => {
         const { access_token } = querystring.parse(body);
         req.session.access_token = access_token;
-        res.redirect('/');
+        res.redirect('http://localhost:4000?token=' + access_token);
         // await request({
         //     uri: 'https://api.github.com/user',
         //     headers: {

@@ -34,7 +34,7 @@ app.use(cors({
 app.use(bodyParser.urlencoded({ extended:false }))
 
 // Home page
-app.get('/', (request, response, next) => { response.render('home/home', { name: "Brandon" }) });
+app.get('/', (request, response, next) => { response.render('home/home') });
 
 // Controllers for other pages
 app.use('/quizzes', quizzesCtrl);

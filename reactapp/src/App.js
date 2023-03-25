@@ -6,6 +6,7 @@ import Navigation from './components/Navigation';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import queryString from 'querystring';
+import axios from 'axios';
 
 function App() {
   // Set a variable for an empty state
@@ -15,13 +16,12 @@ function App() {
     async function fetchJwt() {
       const params = queryString.parse(window.location.search.replace(/^\?/, ''));
       localStorage.token = params.token;
-      const response = await fetch('http://localhost:3000/auth/token', {
+      const response = await axios('http://localhost:3000/auth/token', {
         headers: {
           token : localStorage.token
         }
       })
-
-      setJwt(response.data.token);
+      setJwt(response.data.name);
     }
     fetchJwt();
   }, []);
@@ -33,7 +33,7 @@ function App() {
   return (
     <Router>
       <div>
-        <Navigation />
+        <Navigation isLoggedIn={jwt ? true : false}/>
         <Routes>
           <Route path='/' element={<Home />} />
         </Routes>

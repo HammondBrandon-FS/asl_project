@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const request = require('request');
 const querystring = require('querystring');
+const { LoginToken } = require('../models/index')
 
 router.get('/login', (req, res) => {
     res.render('auth/login');
@@ -19,6 +20,7 @@ router.get('/callback', async (req, res) => {
     }, async (error, response, body) => {
         const { access_token } = querystring.parse(body);
         req.session.access_token = access_token;
+        const loginToken = await LoginToken.create({ name: access_token });
         res.redirect('http://localhost:4000?token=' + access_token);
         // await request({
         //     uri: 'https://api.github.com/user',
@@ -31,6 +33,18 @@ router.get('/callback', async (req, res) => {
         //     res.json(data);
         // })
     });
+});
+
+router.get('/token', async (req, res) => {
+    const token = await LoginToken.findOne({where: {
+        name: req.headers.token
+    }})
+    if (token) {
+        req.session.access_token = req.headers.token;
+        res.json(token);
+    } else {
+        res.json({ token: false });
+    }
 });
 
 module.exports = router;
